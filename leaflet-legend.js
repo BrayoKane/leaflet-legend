@@ -1,73 +1,83 @@
 L.Control.Legend = L.Control.extend({
     options: {
-        position: 'topleft',
+        position: 'bottomright',
         collapsed: true,
-        controlButton: {
-            title: "Legend"
-        }
+        buttonHtml: 'legend'
     },
 
-    onRemove: function(map) {
-    this._container = null;
+    onRemove: function () {
+        this._map.off('click', this.collapse, this);
+
+        this._container = null;
     },
-    
+
     onAdd: function (map) {
-        
         this._map = map;
-        var container = this._container = L.DomUtil.create('div', 'legend-container');
-        
-        this._initToggle();
-        
-        return container;
+
+        return this._initLayout();
     },
-    
-    _initToggle: function() {
 
-        var container = this._container;
+    _initLayout: function() {
+        var className = 'leaflet-legend',
+            container = this._container = L.DomUtil.create('div', className),
+            collapsed = this.options.collapsed;
 
-        //Makes this work on IE10 Touch devices by stopping it from firing a mouseout event when the touch is released
+        // makes this work on IE10 Touch devices by stopping it from firing a mouseout event when the touch is released
         container.setAttribute('aria-haspopup', true);
 
-        if (!L.Browser.touch) {
-            L.DomEvent
-                .disableClickPropagation(container);
-            //.disableScrollPropagation(container);
-        } else {
-            L.DomEvent.on(container, 'click', L.DomEvent.stopPropagation);
-        }
+        L.DomEvent.disableClickPropagation(container);
+        L.DomEvent.disableScrollPropagation(container);
 
-        if (this.options.collapsed) {
-            this._collapse();
+        if (collapsed) {
+            this._map.on('click', this.collapse, this);
 
             if (!L.Browser.android) {
-                L.DomEvent
-                    .on(container, 'mouseover', this._expand, this)
-                    .on(container, 'mouseout', this._collapse, this);
+                L.DomEvent.on(container, {
+                    'mouseover': this.expand,
+                    'mouseout': this.collapse
+                }, this);
             }
-            var link = this._button = L.DomUtil.create('a', " legend-toggle", container);
-            link.href = '#';
-            link.title = this.options.controlButton.title;
-
-            if (L.Browser.touch) {
-                L.DomEvent
-                    .on(link, 'click', L.DomEvent.stop)
-                    .on(link, 'click', this._expand, this);
-            } else {
-                L.DomEvent.on(link, 'focus', this._expand, this);
-            }
-
-            this._map.on('click', this._collapse, this);
         }
-    },
-    
-    _expand: function() {
-        this._container.className = this._container.className.replace('legend-collapsed', '');
-        $(".legend-toggle-icon").hide();
+        var link = L.DomUtil.create('a', className + '-toggle', container);
+        link.href = '#';
+        link.title = 'legend';
+        link.innerHTML = this.options.buttonHtml;
+
+        if (L.Browser.touch) {
+            L.DomEvent.on(link, 'click', L.DomEvent.stop);
+            L.DomEvent.on(link, 'click', this.expand, this);
+        } else {
+            L.DomEvent.on(link, 'focus', this.expand, this);
+        }
+
+        if (!collapsed) {
+            this.expand();
+        }
+
+        var list = L.DomUtil.create('div', className + '-list');
+        for (var color in this.options.items) {
+            var item = L.DomUtil.create('div', className + '-item', list);
+            var colorbox = L.DomUtil.create('div', className + '-color', item);
+            colorbox.innerHTML = '&nbsp;';
+            colorbox.style.backgroundColor = color;
+            L.DomUtil.create('div', className + '-text', item).innerHTML = this.options.items[color];
+        }
+
+        container.appendChild(list);
+        return container;
     },
 
-    _collapse: function() {
-        L.DomUtil.addClass(this._container, 'legend-collapsed');
-        $(".legend-toggle-icon").show();
+    expand: function() {
+        L.DomUtil.addClass(this._container, 'leaflet-legend-expanded');
+        return this;
+    },
+
+    collapse: function() {
+        L.DomUtil.removeClass(this._container, 'leaflet-legend-expanded');
+        return this;
     },
 });
 
+L.control.legend = function (options) {
+    return new L.Control.Legend(options);
+};
