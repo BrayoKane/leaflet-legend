@@ -32,14 +32,15 @@ or fork the [github project](https://github.com/mikeskaug/Leaflet.Legend).
 After including ```leaflet-legend.js``` and ```leaflet-legend.css``` in your project, you can add a legend to your map with the following:
 
 ```js
-var legend = new L.control.legend({
-    buttonHtml: '<i class="glyphicon glyphicon-info-sign"></i>',
-    items: {
-        'red': 'reserved',
-        'blue': 'not reserved'
-    }
-});
-legend.addTo(map);
+L.control.legend({
+    items: [
+        {color: 'red', label: 'reserved'},
+        {color: 'blue', label: 'not reserved'}
+    ],
+    collapsed: true,
+    // insert different label for the collapsed legend button.
+    buttonHtml: 'legend'
+}).addTo(map);
 ```
 
 ## License

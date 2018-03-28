@@ -22,6 +22,8 @@
 <body>
     <div class="container">
         <h1>Leaflet legend</h1>
+        <a href="https://github.com/zostera/leaflet-legend/">zostera/leaflet-legend</a>
+        <br /><br />
         <div id="map"></div>
     </div>
 
@@ -40,10 +42,10 @@
         L.marker([52.5, 4.75]).addTo(map);
 
         L.control.legend({
-            items: {
-                'red': 'reserved',
-                'blue': 'not reserved'
-            },
+            items: [
+                {color: 'red', label: 'reserved'},
+                {color: 'blue', label: 'not reserved'}
+            ],
             collapsed: true
         }).addTo(map);
     </script>

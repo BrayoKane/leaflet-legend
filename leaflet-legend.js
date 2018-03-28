@@ -55,13 +55,13 @@ L.Control.Legend = L.Control.extend({
         }
 
         var list = L.DomUtil.create('div', className + '-list');
-        for (var color in this.options.items) {
-            var item = L.DomUtil.create('div', className + '-item', list);
-            var colorbox = L.DomUtil.create('div', className + '-color', item);
+        this.options.items.forEach(function (item) {
+            var div = L.DomUtil.create('div', className + '-item', list);
+            var colorbox = L.DomUtil.create('div', className + '-color', div);
             colorbox.innerHTML = '&nbsp;';
-            colorbox.style.backgroundColor = color;
-            L.DomUtil.create('div', className + '-text', item).innerHTML = this.options.items[color];
-        }
+            colorbox.style.backgroundColor = item.color;
+            L.DomUtil.create('div', className + '-text', div).innerHTML = item['label'];
+        });
 
         container.appendChild(list);
         return container;
