@@ -1,14 +1,14 @@
 {
   "name": "leaflet-legend",
-  "version": "1.0.0",
-  "description": "A Leaflet plugin to add a popup legend to a map",
+  "version": "1.0.1",
+  "description": "A Leaflet plugin to add a legend to a map",
   "main": "leaflet-legend.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mikeskaug/Leaflet.Legend.git"
+    "url": "git+https://github.com/zostera/leaflet-legend.git"
   },
   "keywords": [
     "Leaflet",
@@ -17,9 +17,9 @@
   "author": "Michael Skaug",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mikeskaug/Leaflet.Legend/issues"
+    "url": "https://github.com/zostera/leaflet-legend/issues"
   },
-  "homepage": "https://github.com/mikeskaug/Leaflet.Legend#readme",
+  "homepage": "https://github.com/zostera/leaflet-legend#readme",
   "dependencies": {
     "leaflet": "^1.3.1"
   }
