@@ -1,14 +1,11 @@
 # leaflet-legend
 
-This is a simple legend plugin for Leaflet.  It can be used to add a small popup legend to a Leaflet map
+This is a simple legend plugin for Leaflet. 
+It can be used to add a small popup legend to a Leaflet map, [demo](https://zostera.github.io/leaflet-legend/example.html)
 
 ### What is this?
 
 This plugin allows you to add a simple popup legend to a Leaflet map.  It extends the Leaflet ```Control``` class: creating and positioning the necessary container elements.
-
-### Demo
-
-An example can be found in [`example.html`](./example.html)
 
 ### Example
 
@@ -25,6 +22,7 @@ L.control.legend({
     buttonHtml: 'legend'
 }).addTo(map);
 ```
+The complete example can be found in [`example.html`](./example.html).
 
 ### Dependencies
 
@@ -33,7 +31,7 @@ L.control.legend({
 ### Install
 Install with npm:
 ```
-npm install zostera/leaflet-legend
+npm install git@github.com:zostera/leaflet-legend.git
 ```
 or fork the [github project](https://github.com/zostera/leaflet-legend).
 
